@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block content %}
+{% load humanize %}
+
+
+    <div class="container-fluid">
+      <div class="row">        
+        <div class="col-sm-8">col-sm-8</div>
+        <div class="col-sm-4">col-sm-4</div>
+      </div>
+      <div class="row">
+        
+        <div class="col-sm text-end">col-sm</div>
+        <div class="col-6">
+          Current Status: 
+
+                <small class="text-muted">{{currentmarkestatus}}</small>
+                <h3>
+                  Best Shares
+                  <!-- {{cur_date.date}} 
+                  <h6>(Loaded Time: {{cur_date.date}})</h6>
+                  -->
+                  <small class="text-muted">{{heading}} <h6>(Loaded Time:    {{Loadedtime}}) </h6></small>
+                </h3>
+                
+          {% if time == 'evening' %}
+                        <li>Please use <mark>"Success Rate %"</mark> Column</li>
+                        <li>Buy listed scrip is last minute</li>
+                        <li>Don't buy if listed scrip is negative</li>                      
+                        <li>List will Update 10-15 minutes before market close.</li>                        
+                      {% else %}
+                        <li>Please use <mark>"Success Rate %"</mark> Column</li>
+                        <li>Less <mark>"Success Rate %"</mark> Best for Profit</li>
+                        
+          {% endif%}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-end">Current</th>
+                <th scope="col" class="text-end">Last Closed</th>
+                <th scope="col" class="text-end">Volume</th>
+                <th scope="col" class="text-end">Success</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                {% if preds %}
+                    {% for predict in preds %}
+                    <tr>
+                        <th scope="row" class="text-center">{{predict.symbol}}</th>
+                        <td class="text-end">{{predict.current}}</td>
+                        <td class="text-end">{{predict.last_closed}}</td>
+                        <td class="text-end">{{predict.volume|intcomma}}</td>
+                        <th  scope="row" class="text-end">{{predict.average|intcomma}}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+
+                     
+            </tbody>
+          </table>
+
+
+        </div>
+        <div class="col-sm">col-sm</div>
+      </div>
+    </div>
+    
+{% endblock  %}
